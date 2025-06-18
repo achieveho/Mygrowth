@@ -1,1 +1,0 @@
-solution = lambda *x : sum(x)

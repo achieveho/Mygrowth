@@ -1,0 +1,865 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "f22a7c87-abab-4fc3-8a17-e78ab3e94f61",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 반복문(Loop Statement)\n",
+    "# 동일한 작업을 여러 번 수행해야 할 때 사용."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "d2058eb8-3e50-42bb-a566-d1549b3c8d9c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# for문\n",
+    "# 반복자(iterator)를 사용해 일정한 횟수만큼 반복을 수행."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "cb1ca6f8-d785-4dad-a31d-1e1e891a27d6",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[85, 95, 75, 70, 90, 100, 95, 85, 80, 85]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 문제 01. 1학년 2반 학생들의 시험 성적은 다음과 같다.\n",
+    "# [80, 90, 70, 65, 85, 95, 90, 80, 75, 80]\n",
+    "# 시험 중 한 문제가 잘못 출제되어 모두 5점의 추가 점수를 받도록 함.\n",
+    "# 변경된 점수를 출력하기.\n",
+    "# '변수: s', '반복자: scores', '수행문: s + 5'를 사용하기.\n",
+    "scores = [80, 90, 70, 65, 85, 95, 90, 80, 75, 80]\n",
+    "final_score = []\n",
+    "\n",
+    "for s in scores:\n",
+    "    s += 5\n",
+    "    final_score.append(s)\n",
+    "\n",
+    "print(final_score)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "7cd66f41-5e7d-487c-9789-2fd9b99f2524",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[85, 95, 75, 70, 100, 100, 95, 85, 80, 85]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 문제 02. 1학년 3반 학생들의 시험 성적은 아래와 같다.\n",
+    "# [80, 90, 70, 65, 95, 100, 90, 80, 75, 80]\n",
+    "# 한 문제가 잘못 출제되어 모두 5점씩 추가해야 함.\n",
+    "# 변경된 점수 목록 출력하기.\n",
+    "# 단, 점수는 최대 100점까지만 허용.\n",
+    "scores = [80, 90, 70, 65, 95, 100, 90, 80, 75, 80]\n",
+    "final_scores = []\n",
+    "\n",
+    "for s in scores:\n",
+    "    if 100 - s <= 4:\n",
+    "        final_scores.append(s)\n",
+    "    else:\n",
+    "        s += 5\n",
+    "        final_scores.append(s)\n",
+    "\n",
+    "print(final_scores)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "981bd894-8cee-439b-a02c-c9180719f634",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[85, 95, 75, 70, 100, 100, 95, 85, 80, 85]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 컴프리헨션(Comprehension)\n",
+    "# for문을 한 줄로 간편하게 표현할 수 있는 기법.\n",
+    "# 대표적으로 '리스트 컴프리헨션'이 많이 사용됨.\n",
+    "# '[수행문1 if 조건문 else 수행문2 for 변수 in list]' 형식.\n",
+    "# '수행문1'은 if 조건을 만족했을 때 동작, '수행문2'는 if 조건을 만족하지 않았을 때 동작.\n",
+    "# 문제 02를 리스트 컴프리헨션으로 작성하기\n",
+    "scores = [80, 90, 70, 65, 95, 100, 90, 80, 75, 80]\n",
+    "\n",
+    "final_score = [s + 5 if 100 - s > 4 else s for s in scores]\n",
+    "print(final_score)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "4fb4b3de-66ea-4d5b-a731-534e101946a9",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[85, 95, 75, 70, 100, 100, 95, 85, 80, 85]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# while문\n",
+    "# 조건을 지정하고, 그 조건이 참일 동안 계속 수행함.\n",
+    "# 문제 02를 while 문으로 작성하기.\n",
+    "scores = [80, 90, 70, 65, 95, 100, 90, 80, 75, 80]\n",
+    "final_scores = []\n",
+    "i = 0\n",
+    "\n",
+    "while i < len(scores):\n",
+    "    if 100 - scores[i] <= 4:\n",
+    "        final_scores.append(scores[i])\n",
+    "        i += 1\n",
+    "    else:\n",
+    "        scores[i] += 5\n",
+    "        final_scores.append(scores[i])\n",
+    "        i += 1\n",
+    "\n",
+    "print(final_scores)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "c2628f8c-2802-4eec-a122-f194b358b2c7",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "현재 휴대폰 사용 시간은 0분 입니다.\n",
+      "현재 휴대폰 사용 시간은 50분 입니다.\n",
+      "현재 휴대폰 사용 시간은 100분 입니다.\n",
+      "현재 휴대폰 사용 시간은 150분 입니다.\n",
+      "현재 휴대폰 사용 시간은 200분 입니다.\n",
+      "현재 휴대폰 사용 시간은 250분 입니다.\n",
+      "현재 휴대폰 사용 시간은 300분 입니다.\n",
+      "휴대폰 사용 시간이 300분이 되었습니다. 휴대폰 사용이 종료됩니다.\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 흐름 제어 - break\n",
+    "# 반복문의 실행을 즉시 중단하고, 반복문을 빠져나감.\n",
+    "# 문제 03. 사용자가 스마트폰을 한 번 사용할 때 마다 50분씩 사용할 때, 300분이 되면 핸드폰 사용을 중단하도록 하는 코드 작성.\n",
+    "use_time = 0\n",
+    "\n",
+    "while True:\n",
+    "    print(f\"현재 휴대폰 사용 시간은 {use_time}분 입니다.\")\n",
+    "    if use_time >= 300:\n",
+    "        print(f\"휴대폰 사용 시간이 300분이 되었습니다. 휴대폰 사용이 종료됩니다.\")\n",
+    "        break\n",
+    "    else:\n",
+    "        use_time += 50\n",
+    "\n",
+    "# # 교재의 코드\n",
+    "# time = 0\n",
+    "\n",
+    "# while True:\n",
+    "#     print(\"현재 사용량: {}\".format(time))\n",
+    "#     if time >= 300:\n",
+    "#         print(\"[사용 중단]하루 사용 권장량에 도달 또는 초과하였습니다.\"]\n",
+    "#         break\n",
+    "#     else:\n",
+    "#         time += 50"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "2d27c4cd-68ec-4cbf-bda5-aa6b5038ca46",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "현재 휴대폰 사용 시간: 0분\n",
+      "현재 휴대폰 사용 시간: 50분\n",
+      "현재 휴대폰 사용 시간: 100분\n",
+      "현재 휴대폰 사용 시간: 150분\n",
+      "현재 휴대폰 사용 시간: 200분\n",
+      "현재 휴대폰 사용 시간: 250분\n",
+      "휴대폰 사용 시간이 300분을 경과했습니다. 휴대폰 사용을 종료합니다.\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 흐름 제어 - pass\n",
+    "# 아무런 동작을 하지 않는 명령어.\n",
+    "# 함수나 클래스, 조건문 등의 구조를 미리 정의해두고 나중에 구현하는 용도로도 사용.\n",
+    "# 디버깅 과정에서 특정 코드 부분을 일시적으로 비활성화 할 때 사용.\n",
+    "# 추상 클래스에서 하위 클래스가 구현해야 할 메서드를 표시할 때도 활용됨.\n",
+    "\n",
+    "# 문제 04. 문제 03에서 현재 사용량이 150분 미만일 때 안전 메세지를 출력하도록 코드를 작성.\n",
+    "# 그리고 안전 메세지를 출력하지 않도록 pass를 사용해서 최종 코드를 작성.\n",
+    "use_time = 0\n",
+    "\n",
+    "while True:\n",
+    "    if use_time < 150:\n",
+    "        pass\n",
+    "    if use_time >= 300:\n",
+    "        print(f\"휴대폰 사용 시간이 300분을 경과했습니다. 휴대폰 사용을 종료합니다.\")\n",
+    "        break\n",
+    "    else:\n",
+    "        print(f\"현재 휴대폰 사용 시간: {use_time}분\")\n",
+    "        use_time += 50"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "d82a05a6-332b-4b37-bafd-9be6799ab572",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "주문번호: 123\n",
+      "주문자: 김**\n",
+      "주소: 서울시 마포구 상암동\n",
+      "주문항목: ['맛좋은 김치', '맛좋은 라면', '시원한 물']\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 문제 05. 딕셔너리 타입을 반복자로 사용하기.\n",
+    "# 'shopping_dict\"의 요소를 for문을 사용해서 출력하기.\n",
+    "shopping_dict = {'주문번호': 123,\n",
+    "                 '주문자': '김**',\n",
+    "                 '주소': '서울시 마포구 상암동',\n",
+    "                 '주문항목': ['맛좋은 김치', '맛좋은 라면', '시원한 물']}\n",
+    "\n",
+    "for key, value in shopping_dict.items():\n",
+    "    print(f\"{key}: {value}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "a1cba4a2-4243-4e07-b65e-d45092842361",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "고구마는(은) 200kcal로 500kcal보다 낮아서 먹어도 돼요.\n",
+      "떡볶이는(은) 600kcal로 500kcal보다 많아서 먹으면 안돼요.\n",
+      "라면는(은) 800kcal로 500kcal보다 많아서 먹으면 안돼요.\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 문제 06. 칼로리 메뉴판에 있는 음식의 섭취 가능 여부를 출력하는 코드 작성하기.\n",
+    "menu = {\"고구마\": 200, \"떡볶이\": 600, \"라면\": 800}\n",
+    "\n",
+    "for key, value in menu.items():\n",
+    "    if value > 500:\n",
+    "        print(f\"{key}는(은) {value}kcal로 500kcal보다 많아서 먹으면 안돼요.\")\n",
+    "    else:\n",
+    "        print(f\"{key}는(은) {value}kcal로 500kcal보다 낮아서 먹어도 돼요.\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "592bddd6-a0f5-433c-96ff-35cd330b3cb9",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "'토'가 나오는 횟수: 4회\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 문제 07. 문자열 카운팅\n",
+    "# 동요 산토끼에서 '토'가 몇 번 나오는지 출력하는 코드 작성하기.\n",
+    "lylic = \"산토끼 토끼야. 어디를 가느냐. 깡충깡충 뛰면서. 어디를 가느냐. 산 고개 고개를. 나 혼자 넘어서. 토실토실 알밤을. 주워 올테야.\"\n",
+    "to_count = 0\n",
+    "\n",
+    "for i in lylic:\n",
+    "    if i == '토':\n",
+    "        to_count += 1\n",
+    "    else:\n",
+    "        pass\n",
+    "\n",
+    "print(f\"'토'가 나오는 횟수: {to_count}회\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "c9bc19d0-e3d2-4086-b6f2-59299558dc17",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "3 * 1 = 3\n",
+      "3 * 2 = 6\n",
+      "3 * 3 = 9\n",
+      "3 * 4 = 12\n",
+      "3 * 5 = 15\n",
+      "3 * 6 = 18\n",
+      "3 * 7 = 21\n",
+      "3 * 8 = 24\n",
+      "3 * 9 = 27\n"
+     ]
+    }
+   ],
+   "source": [
+    "# range() 함수\n",
+    "# 연속된 정수 시퀀스를 생성하는 내장 함수.\n",
+    "# 주로 for 반복문에서 특정 횟수만큼 반복하거나 순차적인 숫자가 필요할 때 사용.\n",
+    "# range(stop), range(start, stop), range(start, stop, step) 형태로 사용 가능.\n",
+    "# 실제로는 메모리에 모든 값을 저장하지 않고 필요할 때마다 값을 생성하는 '이터레이터 객체'.\n",
+    "# 리스트로 변환하려면 'list(range(5))' 처럼 명시적인 형 변환 필요.\n",
+    "# 문제 08. 구구단 3단을 출력하는 코드 작성하기.\n",
+    "for i in range(1, 10, 1):\n",
+    "    print(f\"3 * {i} = {3*i}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "6bf76563-3925-4cbe-9edc-eb3b106e5f69",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 문제 09. 책을 하루에 다섯 쪽씩 20일 동안 공부하려 할 때, 공부 스케줄을 출력하는 코드 작성하기.\n",
+    "# total_page = 0\n",
+    "\n",
+    "# for day in range(20):\n",
+    "#     day += 1\n",
+    "#     print(f\"<{day}일차 공부>\", end = )\n",
+    "#     for page in range(1, 6):\n",
+    "#         print(f\"{total_page+page}쪽 공부하기.\")\n",
+    "#     print()\n",
+    "#     total_page += 5"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "c866a94a-1ee1-4953-bef6-9d6725586bd4",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<1일차 공부>\t<2일차 공부>\t<3일차 공부>\t<4일차 공부>\t<5일차 공부>\t\n",
+      "1페이지 공부하기.\t6페이지 공부하기.\t11페이지 공부하기.\t16페이지 공부하기.\t21페이지 공부하기.\t\n",
+      "2페이지 공부하기.\t7페이지 공부하기.\t12페이지 공부하기.\t17페이지 공부하기.\t22페이지 공부하기.\t\n",
+      "3페이지 공부하기.\t8페이지 공부하기.\t13페이지 공부하기.\t18페이지 공부하기.\t23페이지 공부하기.\t\n",
+      "4페이지 공부하기.\t9페이지 공부하기.\t14페이지 공부하기.\t19페이지 공부하기.\t24페이지 공부하기.\t\n",
+      "5페이지 공부하기.\t10페이지 공부하기.\t15페이지 공부하기.\t20페이지 공부하기.\t25페이지 공부하기.\t\n",
+      "\n",
+      "<6일차 공부>\t<7일차 공부>\t<8일차 공부>\t<9일차 공부>\t<10일차 공부>\t\n",
+      "26페이지 공부하기.\t31페이지 공부하기.\t36페이지 공부하기.\t41페이지 공부하기.\t46페이지 공부하기.\t\n",
+      "27페이지 공부하기.\t32페이지 공부하기.\t37페이지 공부하기.\t42페이지 공부하기.\t47페이지 공부하기.\t\n",
+      "28페이지 공부하기.\t33페이지 공부하기.\t38페이지 공부하기.\t43페이지 공부하기.\t48페이지 공부하기.\t\n",
+      "29페이지 공부하기.\t34페이지 공부하기.\t39페이지 공부하기.\t44페이지 공부하기.\t49페이지 공부하기.\t\n",
+      "30페이지 공부하기.\t35페이지 공부하기.\t40페이지 공부하기.\t45페이지 공부하기.\t50페이지 공부하기.\t\n",
+      "\n",
+      "<11일차 공부>\t<12일차 공부>\t<13일차 공부>\t<14일차 공부>\t<15일차 공부>\t\n",
+      "51페이지 공부하기.\t56페이지 공부하기.\t61페이지 공부하기.\t66페이지 공부하기.\t71페이지 공부하기.\t\n",
+      "52페이지 공부하기.\t57페이지 공부하기.\t62페이지 공부하기.\t67페이지 공부하기.\t72페이지 공부하기.\t\n",
+      "53페이지 공부하기.\t58페이지 공부하기.\t63페이지 공부하기.\t68페이지 공부하기.\t73페이지 공부하기.\t\n",
+      "54페이지 공부하기.\t59페이지 공부하기.\t64페이지 공부하기.\t69페이지 공부하기.\t74페이지 공부하기.\t\n",
+      "55페이지 공부하기.\t60페이지 공부하기.\t65페이지 공부하기.\t70페이지 공부하기.\t75페이지 공부하기.\t\n",
+      "\n",
+      "<16일차 공부>\t<17일차 공부>\t<18일차 공부>\t<19일차 공부>\t<20일차 공부>\t\n",
+      "76페이지 공부하기.\t81페이지 공부하기.\t86페이지 공부하기.\t91페이지 공부하기.\t96페이지 공부하기.\t\n",
+      "77페이지 공부하기.\t82페이지 공부하기.\t87페이지 공부하기.\t92페이지 공부하기.\t97페이지 공부하기.\t\n",
+      "78페이지 공부하기.\t83페이지 공부하기.\t88페이지 공부하기.\t93페이지 공부하기.\t98페이지 공부하기.\t\n",
+      "79페이지 공부하기.\t84페이지 공부하기.\t89페이지 공부하기.\t94페이지 공부하기.\t99페이지 공부하기.\t\n",
+      "80페이지 공부하기.\t85페이지 공부하기.\t90페이지 공부하기.\t95페이지 공부하기.\t100페이지 공부하기.\t\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 문제 09를 5일씩 묶어서 출력하는 ChatGPT의 코드.\n",
+    "# 문제 09를 내가 작성한 코드로는 다 세로로만 나와서 너무 길어짐.\n",
+    "# 그래서 5일치를 가로로 묶어서 세로로 총 4구역만 나오게 해서 좀 덜 길게 출력하고 싶었음.\n",
+    "pages_per_day = 5\n",
+    "total_days = 20\n",
+    "\n",
+    "for start_day in range(1, total_days + 1, 5):\n",
+    "    end_day = start_day + 4\n",
+    "\n",
+    "    for day in range(start_day, end_day + 1):\n",
+    "        print(f\"<{day}일차 공부>\", end = \"\\t\")\n",
+    "    print()\n",
+    "\n",
+    "    for p in range(1, pages_per_day + 1):\n",
+    "        for day in range(start_day, end_day + 1):\n",
+    "            page_number = (day - 1) * pages_per_day + p\n",
+    "            print(f\"{page_number}페이지 공부하기.\", end = \"\\t\")\n",
+    "        print()\n",
+    "    print()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "c8129b63-84e0-46c2-89ba-23394a84d6e6",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<1일차 공부>      <2일차 공부>      <3일차 공부>      <4일차 공부>      <5일차 공부>      \n",
+      "  1페이지 공부하기.      6페이지 공부하기.     11페이지 공부하기.     16페이지 공부하기.     21페이지 공부하기.    \n",
+      "  2페이지 공부하기.      7페이지 공부하기.     12페이지 공부하기.     17페이지 공부하기.     22페이지 공부하기.    \n",
+      "  3페이지 공부하기.      8페이지 공부하기.     13페이지 공부하기.     18페이지 공부하기.     23페이지 공부하기.    \n",
+      "  4페이지 공부하기.      9페이지 공부하기.     14페이지 공부하기.     19페이지 공부하기.     24페이지 공부하기.    \n",
+      "  5페이지 공부하기.     10페이지 공부하기.     15페이지 공부하기.     20페이지 공부하기.     25페이지 공부하기.    \n",
+      "\n",
+      "<6일차 공부>      <7일차 공부>      <8일차 공부>      <9일차 공부>      <10일차 공부>     \n",
+      " 26페이지 공부하기.     31페이지 공부하기.     36페이지 공부하기.     41페이지 공부하기.     46페이지 공부하기.    \n",
+      " 27페이지 공부하기.     32페이지 공부하기.     37페이지 공부하기.     42페이지 공부하기.     47페이지 공부하기.    \n",
+      " 28페이지 공부하기.     33페이지 공부하기.     38페이지 공부하기.     43페이지 공부하기.     48페이지 공부하기.    \n",
+      " 29페이지 공부하기.     34페이지 공부하기.     39페이지 공부하기.     44페이지 공부하기.     49페이지 공부하기.    \n",
+      " 30페이지 공부하기.     35페이지 공부하기.     40페이지 공부하기.     45페이지 공부하기.     50페이지 공부하기.    \n",
+      "\n",
+      "<11일차 공부>     <12일차 공부>     <13일차 공부>     <14일차 공부>     <15일차 공부>     \n",
+      " 51페이지 공부하기.     56페이지 공부하기.     61페이지 공부하기.     66페이지 공부하기.     71페이지 공부하기.    \n",
+      " 52페이지 공부하기.     57페이지 공부하기.     62페이지 공부하기.     67페이지 공부하기.     72페이지 공부하기.    \n",
+      " 53페이지 공부하기.     58페이지 공부하기.     63페이지 공부하기.     68페이지 공부하기.     73페이지 공부하기.    \n",
+      " 54페이지 공부하기.     59페이지 공부하기.     64페이지 공부하기.     69페이지 공부하기.     74페이지 공부하기.    \n",
+      " 55페이지 공부하기.     60페이지 공부하기.     65페이지 공부하기.     70페이지 공부하기.     75페이지 공부하기.    \n",
+      "\n",
+      "<16일차 공부>     <17일차 공부>     <18일차 공부>     <19일차 공부>     <20일차 공부>     \n",
+      " 76페이지 공부하기.     81페이지 공부하기.     86페이지 공부하기.     91페이지 공부하기.     96페이지 공부하기.    \n",
+      " 77페이지 공부하기.     82페이지 공부하기.     87페이지 공부하기.     92페이지 공부하기.     97페이지 공부하기.    \n",
+      " 78페이지 공부하기.     83페이지 공부하기.     88페이지 공부하기.     93페이지 공부하기.     98페이지 공부하기.    \n",
+      " 79페이지 공부하기.     84페이지 공부하기.     89페이지 공부하기.     94페이지 공부하기.     99페이지 공부하기.    \n",
+      " 80페이지 공부하기.     85페이지 공부하기.     90페이지 공부하기.     95페이지 공부하기.    100페이지 공부하기.    \n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 바로 윗 셀의 출력 결과가 너무 불균형스럽게 나와서, 좀 깔끔하게 GPT한테 요청해봤음.\n",
+    "pages_per_day = 5\n",
+    "total_days = 20\n",
+    "block_days = 5      # 한 번에 5일씩 묶어서 출력하는 용도.\n",
+    "\n",
+    "title_width = 14    # <@일차 공부>을 위한 제목 폭.\n",
+    "cell_width = 16     # \"@페이지 공부하기.\" 같은 셀 폭.\n",
+    "\n",
+    "for start_day in range(1, total_days + 1, block_days):\n",
+    "    end_day = min(start_day + block_days -1, total_days)\n",
+    "\n",
+    "    # 제목 행 출력하기.\n",
+    "    for day in range(start_day, end_day + 1):\n",
+    "        title = f\"<{day}일차 공부>\"\n",
+    "        print(title.ljust(title_width), end=\"\")     # 왼쪽으로 정렬하고 폭을 맞추기.\n",
+    "    print()\n",
+    "\n",
+    "    # 각 페이지 행(row) 출력하기.\n",
+    "    for p in range(1, pages_per_day + 1):\n",
+    "        for day in range(start_day, end_day + 1):\n",
+    "            page_number = (day - 1) * pages_per_day + p\n",
+    "            cell = f\"{page_number:3}페이지 공부하기.\"       # 슛저룰 3칸으로 맞춰서 오른쪽으로 정렬.\n",
+    "            print(cell.ljust(cell_width), end =\"\")\n",
+    "        print()\n",
+    "    \n",
+    "    print()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "5f0f4510",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<1일차 공부>                <2일차 공부>                <3일차 공부>                <4일차 공부>                <5일차 공부>                \n",
+      "1  페이지 공부하기.            6  페이지 공부하기.            11 페이지 공부하기.            16 페이지 공부하기.            21 페이지 공부하기.            \n",
+      "2  페이지 공부하기.            7  페이지 공부하기.            12 페이지 공부하기.            17 페이지 공부하기.            22 페이지 공부하기.            \n",
+      "3  페이지 공부하기.            8  페이지 공부하기.            13 페이지 공부하기.            18 페이지 공부하기.            23 페이지 공부하기.            \n",
+      "4  페이지 공부하기.            9  페이지 공부하기.            14 페이지 공부하기.            19 페이지 공부하기.            24 페이지 공부하기.            \n",
+      "5  페이지 공부하기.            10 페이지 공부하기.            15 페이지 공부하기.            20 페이지 공부하기.            25 페이지 공부하기.            \n",
+      "\n",
+      "<6일차 공부>                <7일차 공부>                <8일차 공부>                <9일차 공부>                <10일차 공부>               \n",
+      "26 페이지 공부하기.            31 페이지 공부하기.            36 페이지 공부하기.            41 페이지 공부하기.            46 페이지 공부하기.            \n",
+      "27 페이지 공부하기.            32 페이지 공부하기.            37 페이지 공부하기.            42 페이지 공부하기.            47 페이지 공부하기.            \n",
+      "28 페이지 공부하기.            33 페이지 공부하기.            38 페이지 공부하기.            43 페이지 공부하기.            48 페이지 공부하기.            \n",
+      "29 페이지 공부하기.            34 페이지 공부하기.            39 페이지 공부하기.            44 페이지 공부하기.            49 페이지 공부하기.            \n",
+      "30 페이지 공부하기.            35 페이지 공부하기.            40 페이지 공부하기.            45 페이지 공부하기.            50 페이지 공부하기.            \n",
+      "\n",
+      "<11일차 공부>               <12일차 공부>               <13일차 공부>               <14일차 공부>               <15일차 공부>               \n",
+      "51 페이지 공부하기.            56 페이지 공부하기.            61 페이지 공부하기.            66 페이지 공부하기.            71 페이지 공부하기.            \n",
+      "52 페이지 공부하기.            57 페이지 공부하기.            62 페이지 공부하기.            67 페이지 공부하기.            72 페이지 공부하기.            \n",
+      "53 페이지 공부하기.            58 페이지 공부하기.            63 페이지 공부하기.            68 페이지 공부하기.            73 페이지 공부하기.            \n",
+      "54 페이지 공부하기.            59 페이지 공부하기.            64 페이지 공부하기.            69 페이지 공부하기.            74 페이지 공부하기.            \n",
+      "55 페이지 공부하기.            60 페이지 공부하기.            65 페이지 공부하기.            70 페이지 공부하기.            75 페이지 공부하기.            \n",
+      "\n",
+      "<16일차 공부>               <17일차 공부>               <18일차 공부>               <19일차 공부>               <20일차 공부>               \n",
+      "76 페이지 공부하기.            81 페이지 공부하기.            86 페이지 공부하기.            91 페이지 공부하기.            96 페이지 공부하기.            \n",
+      "77 페이지 공부하기.            82 페이지 공부하기.            87 페이지 공부하기.            92 페이지 공부하기.            97 페이지 공부하기.            \n",
+      "78 페이지 공부하기.            83 페이지 공부하기.            88 페이지 공부하기.            93 페이지 공부하기.            98 페이지 공부하기.            \n",
+      "79 페이지 공부하기.            84 페이지 공부하기.            89 페이지 공부하기.            94 페이지 공부하기.            99 페이지 공부하기.            \n",
+      "80 페이지 공부하기.            85 페이지 공부하기.            90 페이지 공부하기.            95 페이지 공부하기.            100페이지 공부하기.            \n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 바로 위 셀의 정렬이 아직도 좀 부족하다 느껴서, GPT한테 추가 개선 버전을 요청.\n",
+    "pages_per_day = 5\n",
+    "total_days = 20\n",
+    "block_days = 5\n",
+    "\n",
+    "gap = 4                 # 열 사이 공백\n",
+    "num_width = 3           # 페이지 번호 폭\n",
+    "cell_width = 20         # 각 칸의 폭\n",
+    "\n",
+    "for start_day in range(1, total_days + 1, block_days):\n",
+    "    end_day = min(start_day + block_days - 1, total_days)\n",
+    "    \n",
+    "    # 제목 행\n",
+    "    for day in range(start_day, end_day + 1):\n",
+    "        title = f\"<{day}일차 공부>\"\n",
+    "        print(title.ljust(cell_width), end = \" \" * gap)\n",
+    "    print()\n",
+    "\n",
+    "    # 페이지 행 (1 ~ 5쪽)\n",
+    "    for p in range(1, pages_per_day + 1):\n",
+    "        for day in range(start_day, end_day + 1):\n",
+    "            page_number = (day - 1) * pages_per_day + p\n",
+    "            cell = f\"{page_number:<{num_width}}페이지 공부하기.\"\n",
+    "            print(cell.ljust(cell_width), end=\" \" * gap)            # 앞 공백을 없애기 위해 숫자를 왼쪽으로 정렬.\n",
+    "        print()\n",
+    "    \n",
+    "    print()\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "5af93958",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<1일차 공부>              <2일차 공부>              <3일차 공부>              <4일차 공부>              <5일차 공부>              \n",
+      "1  페이지 공부하기.       6  페이지 공부하기.       11 페이지 공부하기.       16 페이지 공부하기.       21 페이지 공부하기.       \n",
+      "2  페이지 공부하기.       7  페이지 공부하기.       12 페이지 공부하기.       17 페이지 공부하기.       22 페이지 공부하기.       \n",
+      "3  페이지 공부하기.       8  페이지 공부하기.       13 페이지 공부하기.       18 페이지 공부하기.       23 페이지 공부하기.       \n",
+      "4  페이지 공부하기.       9  페이지 공부하기.       14 페이지 공부하기.       19 페이지 공부하기.       24 페이지 공부하기.       \n",
+      "5  페이지 공부하기.       10 페이지 공부하기.       15 페이지 공부하기.       20 페이지 공부하기.       25 페이지 공부하기.       \n",
+      "\n",
+      "<6일차 공부>              <7일차 공부>              <8일차 공부>              <9일차 공부>              <10일차 공부>             \n",
+      "26 페이지 공부하기.       31 페이지 공부하기.       36 페이지 공부하기.       41 페이지 공부하기.       46 페이지 공부하기.       \n",
+      "27 페이지 공부하기.       32 페이지 공부하기.       37 페이지 공부하기.       42 페이지 공부하기.       47 페이지 공부하기.       \n",
+      "28 페이지 공부하기.       33 페이지 공부하기.       38 페이지 공부하기.       43 페이지 공부하기.       48 페이지 공부하기.       \n",
+      "29 페이지 공부하기.       34 페이지 공부하기.       39 페이지 공부하기.       44 페이지 공부하기.       49 페이지 공부하기.       \n",
+      "30 페이지 공부하기.       35 페이지 공부하기.       40 페이지 공부하기.       45 페이지 공부하기.       50 페이지 공부하기.       \n",
+      "\n",
+      "<11일차 공부>             <12일차 공부>             <13일차 공부>             <14일차 공부>             <15일차 공부>             \n",
+      "51 페이지 공부하기.       56 페이지 공부하기.       61 페이지 공부하기.       66 페이지 공부하기.       71 페이지 공부하기.       \n",
+      "52 페이지 공부하기.       57 페이지 공부하기.       62 페이지 공부하기.       67 페이지 공부하기.       72 페이지 공부하기.       \n",
+      "53 페이지 공부하기.       58 페이지 공부하기.       63 페이지 공부하기.       68 페이지 공부하기.       73 페이지 공부하기.       \n",
+      "54 페이지 공부하기.       59 페이지 공부하기.       64 페이지 공부하기.       69 페이지 공부하기.       74 페이지 공부하기.       \n",
+      "55 페이지 공부하기.       60 페이지 공부하기.       65 페이지 공부하기.       70 페이지 공부하기.       75 페이지 공부하기.       \n",
+      "\n",
+      "<16일차 공부>             <17일차 공부>             <18일차 공부>             <19일차 공부>             <20일차 공부>             \n",
+      "76 페이지 공부하기.       81 페이지 공부하기.       86 페이지 공부하기.       91 페이지 공부하기.       96 페이지 공부하기.       \n",
+      "77 페이지 공부하기.       82 페이지 공부하기.       87 페이지 공부하기.       92 페이지 공부하기.       97 페이지 공부하기.       \n",
+      "78 페이지 공부하기.       83 페이지 공부하기.       88 페이지 공부하기.       93 페이지 공부하기.       98 페이지 공부하기.       \n",
+      "79 페이지 공부하기.       84 페이지 공부하기.       89 페이지 공부하기.       94 페이지 공부하기.       99 페이지 공부하기.       \n",
+      "80 페이지 공부하기.       85 페이지 공부하기.       90 페이지 공부하기.       95 페이지 공부하기.       100페이지 공부하기.       \n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "from wcwidth import wcswidth\n",
+    "\n",
+    "def ljust_vis(s: str, width: int) -> str:\n",
+    "    \"\"\"터미널 '표시 폭' 기준으로 왼쪽 패딩\"\"\"\n",
+    "    pad = max(0, width - wcswidth(s))\n",
+    "    return s + (\" \" * pad)\n",
+    "\n",
+    "pages_per_day = 5\n",
+    "total_days = 20\n",
+    "block_days = 5\n",
+    "gap = 4\n",
+    "num_width = 3\n",
+    "\n",
+    "cell_width = 22\n",
+    "\n",
+    "for start_day in range(1, total_days + 1, block_days):\n",
+    "    end_day = min(start_day + block_days - 1, total_days)\n",
+    "\n",
+    "    for day in range(start_day, end_day + 1):\n",
+    "        title = f\"<{day}일차 공부>\"\n",
+    "        print(ljust_vis(title, cell_width), end=\" \" * gap)\n",
+    "    print()\n",
+    "\n",
+    "    for p in range(1, pages_per_day + 1):\n",
+    "        for day in range(start_day, end_day + 1):\n",
+    "            page_number = (day - 1) * pages_per_day + p\n",
+    "            cell = f\"{page_number:<{num_width}}페이지 공부하기.\"\n",
+    "            print(ljust_vis(cell, cell_width), end=\" \" * gap)\n",
+    "        print()\n",
+    "    \n",
+    "    print()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "9a201f50",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<table style='border-collapse:collapse; margin-bottom:14px;'><tr><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;1일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;2일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;3일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;4일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;5일차 공부&gt;</th><tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>1페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>6페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>11페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>16페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>21페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>2페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>7페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>12페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>17페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>22페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>3페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>8페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>13페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>18페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>23페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>4페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>9페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>14페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>19페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>24페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>5페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>10페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>15페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>20페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>25페이지 공부하기.</td></tr></table><table style='border-collapse:collapse; margin-bottom:14px;'><tr><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;6일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;7일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;8일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;9일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;10일차 공부&gt;</th><tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>26페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>31페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>36페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>41페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>46페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>27페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>32페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>37페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>42페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>47페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>28페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>33페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>38페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>43페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>48페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>29페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>34페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>39페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>44페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>49페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>30페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>35페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>40페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>45페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>50페이지 공부하기.</td></tr></table><table style='border-collapse:collapse; margin-bottom:14px;'><tr><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;11일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;12일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;13일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;14일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;15일차 공부&gt;</th><tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>51페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>56페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>61페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>66페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>71페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>52페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>57페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>62페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>67페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>72페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>53페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>58페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>63페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>68페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>73페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>54페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>59페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>64페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>69페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>74페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>55페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>60페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>65페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>70페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>75페이지 공부하기.</td></tr></table><table style='border-collapse:collapse; margin-bottom:14px;'><tr><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;16일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;17일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;18일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;19일차 공부&gt;</th><th style='border:1px solid #666; padding:6px 10px; text-align:left;'>&lt;20일차 공부&gt;</th><tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>76페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>81페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>86페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>91페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>96페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>77페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>82페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>87페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>92페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>97페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>78페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>83페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>88페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>93페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>98페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>79페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>84페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>89페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>94페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>99페이지 공부하기.</td></tr><tr><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>80페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>85페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>90페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>95페이지 공부하기.</td><td style='border:1px solid #666; padding:6px 10px; text-align:left;'>100페이지 공부하기.</td></tr></table>"
+      ],
+      "text/plain": [
+       "<IPython.core.display.HTML object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "# 콘솔대신 HTML 테이블(표 렌더러)로 출력하기.\n",
+    "from IPython.display import HTML, display\n",
+    "\n",
+    "pages_per_day = 5\n",
+    "total_days = 20\n",
+    "block_days = 5\n",
+    "\n",
+    "html = []\n",
+    "\n",
+    "for start_day in range(1, total_days + 1, block_days):\n",
+    "    end_day = min(start_day + block_days - 1, total_days)\n",
+    "\n",
+    "    html.append(\"<table style='border-collapse:collapse; margin-bottom:14px;'>\")\n",
+    "    html.append(\"<tr>\")\n",
+    "    for day in range(start_day, end_day + 1):\n",
+    "        html.append(f\"<th style='border:1px solid #666; padding:6px 10px; text-align:left;'>\"f\"&lt;{day}일차 공부&gt;</th>\")\n",
+    "    html.append(\"<tr>\")\n",
+    "\n",
+    "    for p in range(1, pages_per_day + 1):\n",
+    "        html.append(\"<tr>\")\n",
+    "        for day in range(start_day, end_day + 1):\n",
+    "            page_number = (day - 1) * pages_per_day + p\n",
+    "            html.append(f\"<td style='border:1px solid #666; padding:6px 10px; text-align:left;'>\"f\"{page_number}페이지 공부하기.</td>\")\n",
+    "        html.append(\"</tr>\")\n",
+    "    html.append(\"</table>\")\n",
+    "\n",
+    "display(HTML(\"\".join(html)))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "3cd6cde3",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<1일차 공부>             <2일차 공부>             <3일차 공부>             <4일차 공부>             <5일차 공부>             \n",
+      "1  페이지 공부하기.      6  페이지 공부하기.      11 페이지 공부하기.      16 페이지 공부하기.      21 페이지 공부하기.      \n",
+      "2  페이지 공부하기.      7  페이지 공부하기.      12 페이지 공부하기.      17 페이지 공부하기.      22 페이지 공부하기.      \n",
+      "3  페이지 공부하기.      8  페이지 공부하기.      13 페이지 공부하기.      18 페이지 공부하기.      23 페이지 공부하기.      \n",
+      "4  페이지 공부하기.      9  페이지 공부하기.      14 페이지 공부하기.      19 페이지 공부하기.      24 페이지 공부하기.      \n",
+      "5  페이지 공부하기.      10 페이지 공부하기.      15 페이지 공부하기.      20 페이지 공부하기.      25 페이지 공부하기.      \n",
+      "\n",
+      "<6일차 공부>             <7일차 공부>             <8일차 공부>             <9일차 공부>             <10일차 공부>            \n",
+      "26 페이지 공부하기.      31 페이지 공부하기.      36 페이지 공부하기.      41 페이지 공부하기.      46 페이지 공부하기.      \n",
+      "27 페이지 공부하기.      32 페이지 공부하기.      37 페이지 공부하기.      42 페이지 공부하기.      47 페이지 공부하기.      \n",
+      "28 페이지 공부하기.      33 페이지 공부하기.      38 페이지 공부하기.      43 페이지 공부하기.      48 페이지 공부하기.      \n",
+      "29 페이지 공부하기.      34 페이지 공부하기.      39 페이지 공부하기.      44 페이지 공부하기.      49 페이지 공부하기.      \n",
+      "30 페이지 공부하기.      35 페이지 공부하기.      40 페이지 공부하기.      45 페이지 공부하기.      50 페이지 공부하기.      \n",
+      "\n",
+      "<11일차 공부>            <12일차 공부>            <13일차 공부>            <14일차 공부>            <15일차 공부>            \n",
+      "51 페이지 공부하기.      56 페이지 공부하기.      61 페이지 공부하기.      66 페이지 공부하기.      71 페이지 공부하기.      \n",
+      "52 페이지 공부하기.      57 페이지 공부하기.      62 페이지 공부하기.      67 페이지 공부하기.      72 페이지 공부하기.      \n",
+      "53 페이지 공부하기.      58 페이지 공부하기.      63 페이지 공부하기.      68 페이지 공부하기.      73 페이지 공부하기.      \n",
+      "54 페이지 공부하기.      59 페이지 공부하기.      64 페이지 공부하기.      69 페이지 공부하기.      74 페이지 공부하기.      \n",
+      "55 페이지 공부하기.      60 페이지 공부하기.      65 페이지 공부하기.      70 페이지 공부하기.      75 페이지 공부하기.      \n",
+      "\n",
+      "<16일차 공부>            <17일차 공부>            <18일차 공부>            <19일차 공부>            <20일차 공부>            \n",
+      "76 페이지 공부하기.      81 페이지 공부하기.      86 페이지 공부하기.      91 페이지 공부하기.      96 페이지 공부하기.      \n",
+      "77 페이지 공부하기.      82 페이지 공부하기.      87 페이지 공부하기.      92 페이지 공부하기.      97 페이지 공부하기.      \n",
+      "78 페이지 공부하기.      83 페이지 공부하기.      88 페이지 공부하기.      93 페이지 공부하기.      98 페이지 공부하기.      \n",
+      "79 페이지 공부하기.      84 페이지 공부하기.      89 페이지 공부하기.      94 페이지 공부하기.      99 페이지 공부하기.      \n",
+      "80 페이지 공부하기.      85 페이지 공부하기.      90 페이지 공부하기.      95 페이지 공부하기.      100페이지 공부하기.      \n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 텍스트 출력(노트북 셀 출력)으로 가능한 최종 버전\n",
+    "from wcwidth import wcswidth\n",
+    "\n",
+    "def ljust_vis(s: str, width: int) -> str:\n",
+    "    pad = max(0, width - wcswidth(s))           # 표시 폭 기준으로 왼쪽 패딩\n",
+    "    \n",
+    "    return s + (\" \" * pad)\n",
+    "\n",
+    "pages_per_day = 5\n",
+    "total_days = 20\n",
+    "block_days = 5\n",
+    "gap = 4\n",
+    "num_width = 3\n",
+    "\n",
+    "for start_day in range(1, total_days + 1, block_days):\n",
+    "    end_day = min(start_day + block_days - 1, total_days)\n",
+    "\n",
+    "    titles = [f\"<{day}일차 공부>\" for day in range(start_day, end_day + 1)]\n",
+    "    cells = []\n",
+    "    for p in range(1, pages_per_day + 1):\n",
+    "        for day in range(start_day, end_day + 1):\n",
+    "            page_number = (day - 1) * pages_per_day + p\n",
+    "            cells.append(f\"{page_number:<{num_width}}페이지 공부하기.\")            # 숫자를 왼쪽 정렬로 만들어 '숫자 시작' 위치를 통일하기.\n",
+    "    \n",
+    "    col_width = max([wcswidth(t) for t in titles] + [wcswidth(c) for c in cells]) + 2       # 블록 단위로 필요한 폭을 자동으로 산출하기.\n",
+    "\n",
+    "    # 제목 행\n",
+    "    for t in titles:\n",
+    "        print(ljust_vis(t, col_width), end=\" \" * gap)\n",
+    "    print()\n",
+    "\n",
+    "    # 내용 행\n",
+    "    for p in range(1, pages_per_day + 1):\n",
+    "        for day in range(start_day, end_day + 1):\n",
+    "            page_number = (day - 1) * pages_per_day + p\n",
+    "            cell = f\"{page_number:<{num_width}}페이지 공부하기.\"\n",
+    "            print(ljust_vis(cell, col_width), end=\" \" * gap)\n",
+    "        print()\n",
+    "    print()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "d1ed7b41",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "새 상품인 포도를 추가한 결과: {'사과': 50, '바나나': 30, '오렌지': 25, '포도': 40}\n",
+      "\n",
+      "===현재 재고 현황===\n",
+      "사과: 50\n",
+      "바나나: 30\n",
+      "오렌지: 25\n",
+      "포도: 40\n",
+      "\n",
+      "\n",
+      "포도의 재고: 40개\n"
+     ]
+    }
+   ],
+   "source": [
+    "# 문제 10. 다음 기능을 모두 포함한 상품 재고 관리 시스템 작성하기.\n",
+    "# 초기 재고 설정: 사과 50개, 바나나 30개, 오렌지 25개로 시작.\n",
+    "# 상품 관리 기능: 새 상품(포도 40개) 추가, 기존 상품의 재고 수정 및 상품 삭제\n",
+    "# 재고 조회 기능: 전체 재고 현황 출력, 특정 상품 재고 확인, 재고 부족 상품 찾기(30개 미만일 때)\n",
+    "# 재고 변경 기능: 상품 판매 시 재고 차감, 상품 입고 시 재고 증가, 재고 부족 시 경고 메세지\n",
+    "\n",
+    "# 사실 이 문제는 난 함수로 기능을 만드는 것인 줄 알았는데, 그게 아니었더라. 그냥 딕셔너리와 반복문 사용을 하기 위한 용도였음.\n",
+    "repo = {\n",
+    "    \"사과\": 50,\n",
+    "    \"바나나\": 30,\n",
+    "    \"오렌지\": 25\n",
+    "}\n",
+    "\n",
+    "# 새 상품 추가\n",
+    "repo[\"포도\"] = 40\n",
+    "print(f\"새 상품인 포도를 추가한 결과: {repo}\")\n",
+    "\n",
+    "# 전체 재고 현황 출력\n",
+    "print(\"\\n===현재 재고 현황===\")\n",
+    "for product, quantity in repo.items():\n",
+    "    print(f\"{product}: {quantity}\")\n",
+    "\n",
+    "print(\"\\n\")\n",
+    "\n",
+    "# 특정 상품의 재고 확인\n",
+    "product_name = input(\"상품명을 입력하세요: \")\n",
+    "if product_name in repo:\n",
+    "    print(f\"{product_name}의 재고: {repo[product_name]}개\")\n",
+    "else:\n",
+    "    print(f\"{product_name}(이)라는 상품이 존재하지 않습니다.\")"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Latest Python",
+   "language": "python",
+   "name": "latest-venv"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

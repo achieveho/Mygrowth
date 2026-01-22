@@ -1,0 +1,17 @@
+CREATE SCHEMA IF NOT EXISTS practice;
+
+CREATE TABLE IF NOT EXISTS practice.patients(
+	patient_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	name TEXT NOT NULL,
+	sex TEXT CHECK (sex IN ('M', 'F')),
+	birth_date DATE,
+	created_at TIMESTAMP NOT NULL DEFAULT now()
+);
+
+INSERT INTO practice.patients (name, sex, birth_date)
+VALUES
+	('Kim', 'M', '1988-03-12'),
+	('Lee', 'F', '2001-11-02'),
+	('Park', 'M', '1995-07-30');
+
+SELECT * FROM practice.patients ORDER BY patient_id;

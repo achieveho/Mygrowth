@@ -340,7 +340,7 @@ elif selected_section == "데이터 / 테이블 / 편집":
                 "cost": st.column_config.NumberColumn(
                     "진료비",
                     help="원 단위 비율",
-                    nin_value=0,
+                    min_value=0,
                     format="%d원"
                 ),
                 "risk_score": st.column_config.ProgressColumn(
@@ -618,4 +618,458 @@ elif selected_section == "레이아웃 / 컨테이너":
     st.subheader("Empty placeholder")
     placeholder = st.empty()
 
+    if st.button("placeholder 내용 바꾸기"):
+        placeholder.success("st.empty() 영역의 내용이 바뀌었습니다.")
+    else:
+        placeholder.info("버튼을 누르면 이 영역이 교체됩니다.")
     
+    st.subheader("Expander")
+    with st.expander("자세한 설명 열기"):
+        st.write("접었다 펼 수 있는 영역입니다.")
+        st.dataframe(filtered_df.describe(), use_container_width=True)
+
+    if has_streamlit_api("popover"):
+        st.subheader("Popover")
+        with st.popover("설정 열기"):
+            st.checkbox("옵션 A")
+            st.checkbox("옵션 B")
+            st.slider("옵션 값", 0, 10, 5)
+    
+    if has_streamlit_api("space"):
+        st.space("medium")
+    
+    st.subheader("Tabs")
+    t1, t2, t3 = st.tabs(["탭 1", "탭 2", "탭 3"])
+
+    with t1:
+        st.write("첫 번째 탭입니다.")
+    
+    with t2:
+        st.line_chart(filtered_df[["visits", "risk_score"]].head(30))
+    
+    with t3:
+        st.dataframe(filtered_df.head(10), use_container_width=True)
+    
+    st.divider()
+
+    st.subheader("Dialog 예제")
+
+    if has_streamlit_api("dialog"):
+        @st.dialog("프로필 입력 Dialog")
+        def profile_dialog():
+            dialog_name = st.text_input("이름", value="성호님")
+            dialog_goal = st.text_area("목표", value="Streamlit 학습")
+            if st.button("Dialog 저장"):
+                st.session_state["dialog_result"] = {
+                    "name": dialog_name,
+                    "goal": dialog_goal,
+                }
+                st.rerun()
+
+            if st.button("Dialog 열기"):
+                profile_dialog()
+            
+            if "dialog_result" in st.session_state:
+                st.write("Dialog 결과:", st.session_state.dialog_result)
+            else:
+                st.caption("현재 설치된 Streamlit 버전에 st.dialog가 없습니다.")
+            
+elif selected_section == "미디어 / 파일":
+    st.header("7. 미디어 / 파일")
+
+    tab1, tab2, tab3, tab4 = st.tabs(["Image", "Audio", "Video/PDF", "Camera/Audio input"])
+
+    with tab1:
+        st.subheader("st.image")
+        sample_img = make_sample_image()
+        st.image(sample_img, caption="PIL로 생성한 샘플 이미지", use_container_width=True)
+
+        uploaded_image = st.file_uploader(
+            "이미지 파일 업로드",
+            type=["png", "jpg", "jpeg"],
+            key="image_uploader",
+        )
+
+        if uploaded_image is not None:
+            st.image(uploaded_image, caption="업로드한 이미지", use_container_width=True)
+    
+    with tab2:
+        st.subheader("st.audio")
+        audio = make_audio_array()
+        st.audio(audio, sample_rate=44_100)
+
+        uploaded_audio = st.file_uploader(
+            "오디오 파일 업로드",
+            type=["wav", "mp3", "ogg"],
+            key="audio_uploader",
+        )
+
+        if uploaded_audio is not None:
+            st.audio(uploaded_audio)
+    
+    with tab3:
+        st.subheader("st.video / st.pdf")
+
+        uploaded_video = st.file_uploader(
+            "비디오 파일 업로드",
+            type=["mp4", "mov", "avi"],
+            key="video_uploader",
+        )
+
+        if uploaded_video is not None:
+            st.video(uploaded_video)
+        else:
+            st.info("비디오 파일을 업로드하면 st.video로 표시합니다.")
+        
+        uploaded_pdf = st.file_uploader(
+            "PDF 파일 업로드",
+            type=["pdf"],
+            key="pdf_uploader",
+        )
+
+        if uploaded_pdf is not None:
+            if has_streamlit_api("pdf"):
+                st.pdf(uploaded_pdf)
+            else:
+                st.warning("현재 설치된 Streamlit 버전에 st.pdf가 없습니다.")
+        else:
+            st.info("PDF 파일을 업로드하면 st.pdf로 표시합니다.")
+    
+    with tab4:
+        st.subheader("st.camera_input / st.audio_input")
+
+        camera_image = st.camera_input("카메라로 이미지 촬영")
+        if camera_image is not None:
+            st.image(camera_image, caption="카메라 입력 이미지")
+        
+        if has_streamlit_api("audio_input"):
+            recorded_audio = st.audio_input("마이크로 음성 녹음")
+            if recorded_audio is not None:
+                st.audio(recorded_audio)
+        else:
+            st.caption("현재 설치된 Streamlit 버전에 st.audio_input이 없습니다.")
+            
+elif selected_section == "상태 표시 / 실행 흐름":
+    st.header("8. 상태 표시 / 실행 흐름")
+
+    st.subheader("상태 메시지")
+    st.success("st.success: 성공 메시지")
+    st.info("st.info: 정보 메시지")
+    st.warning("st.warning: 경고 메시지")
+    st.error("st.error: 에러 메시지")
+
+    try:
+        raise ValueError("예제용 ValueError입니다.")
+    except ValueError as e:
+        with st.expander("st.exception 예제 보기"):
+            st.exception(e)
+    
+    st.divider()
+
+    st.subheader("Progress / Spinner / Status")
+
+    if st.button("짧은 작업 실행"):
+        progress = st.progress(0, text="작업 시작")
+        for i in range(101):
+            progress.progress(i, text=f"진행률: {i}%")
+            time.sleep(0.005)
+        
+        with st.spinner("결과 정리 중..."):
+            time.sleep(0.5)
+        
+        if has_streamlit_api("status"):
+            with st.status("작업 로그", expanded=True) as status:
+                st.write("1단계: 데이터 로드 완료")
+                time.sleep(0.2)
+                st.write("2단계: 집계 완료")
+                time.sleep(0.2)
+                st.write("3단계: 시각화 준비 완료")
+                status.update(label="작업 완료", state="complete")
+        
+        st.success("작업이 완료되었습니다.")
+
+        if has_streamlit_api("toast"):
+            st.toast("작업 완료!", icon="✅")
+    
+    st.divider()
+
+    st.subheader("Celebration")
+    c1, c2 = st.columns(2)
+
+    with c1:
+        if st.button("풍선 효과"):
+            st.balloons()
+    
+    with c2:
+        if has_streamlit_api("snow"):
+            if st.button("눈 효과"):
+                st.snow()
+    
+    st.divider()
+
+    st.subheader("st.rerun / st.stop")
+
+    if st.button("클릭 횟수 초기화 후 rerun"):
+        st.session_state.click_count = 0
+        st.rerun()
+    
+    stop_app = st.checkbox("여기서 앱 실행을 중단하는 st.stop() 테스트")
+    if stop_app:
+        st.warning("st.stop()이 호출되어 이 아래 코드는 실행되지 않습니다.")
+        st.stop()
+
+    st.write("st.stop() 체크박스가 꺼져 있으므로 이 문장이 보입니다.")
+
+    st.divider()
+
+    st.subheader("st.fragment 예제")
+
+    if has_streamlit_api("fragment"):
+        @st.fragment(run_every="5s")
+        def live_clock_fragment():
+            st.info(f"이 영역은 fragment 예제입니다. 현재 시각: {datetime.now().strftime('%H:%M:%S')}")
+        
+        live_clock_fragment()
+    else:
+        st.caption("현재 설치된 Stremalit 버전에 st.fragment가 없습니다.")
+    
+elif selected_section == "Session State / Cache":
+    st.header("9. Session State / Cache")
+
+    st.subheader("Session State")
+    st.write("Streamlit은 위젯 조작 때마다 스크립트를 위에서 아래로 다시 실행합니다.")
+    st.write("따라서 값을 유지하려면 t.session_state를 사용해야 합니다.")
+
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        if st.button("count + 1"):
+            st.session_state.click_count += 1
+    
+    with c2:
+        if st.button("count -1"):
+            st.session_state.click_count -= 1
+            
+    with c3:
+        if st.button("count reset"):
+            st.session_state.click_count = 0
+    
+    st.metric("현재 count", st.session_state.click_count)
+
+    with st.expander("현재 session_state 전체 보기"):
+        st.write(dict(st.session_state))
+
+    st.divider()
+
+    st.subheader("Cache Data")
+    st.write("make_demo_dataframe 함수는 @st.cache_data로 캐시되어 있습니다.")
+
+    seed = st.number_input("데이터 seed", min_value=0, max_value=9999, value=42)
+    n_rows = st.slider("행 수", min_value=50, max_value=1000, value=200)
+
+    cached_df = make_demo_dataframe(n=n_rows, seed=seed)
+    st.dataframe(cached_df.head(10), use_container_width=True)
+    
+    if st.button("cache_data 비우기"):
+        make_demo_dataframe.clear()
+        st.success("make_demo_dataframe 캐시를 비웠습니다.")
+    
+    st.divider()
+
+    st.subheader("Cache Resource")
+    resource = get_fake_model_resource()
+    st.json(resource)
+
+    if st.button("cache_resource 비우기"):
+        get_fake_model_resource.clear()
+        st.success("get_fake_model_resource 캐시를 비웠습니다.")
+    
+    st.divider()
+
+    st.subheader("Query Params")
+
+    st.write("현재 URL query params:")
+    st.write(dict(st.query_params))
+
+    q_value = st.text_input("URL에 저장할 demo 파라미터 값", value="streamlit")
+    if st.button("query param 저장"):
+        st.query_params["demo"] = q_value
+        st.success("URL query param을 저장했습니다.")
+    
+    if st.button("query params 전체 삭제"):
+        st.query_params.clear()
+        st.success("URL query params를 삭제했습니다.")
+    
+    if has_streamlit_api("context"):
+        with st.expander("st.context 정보"):
+            st.write("locale:", getattr(st.context, "locale", None))
+            st.write("timezone:", getattr(st.context, "timezone", None))
+
+elif selected_section == "Chat UI":
+    st.header("10. Chat UI")
+
+    st.write("간단한 규칙 기반 챗본 예제입니다. 실제 LLM API를 연결하지는 않습니다.")
+
+    for message in st.session_state.chat_messages:
+        with st.chat_message(message["role"]):
+            st.write(message["content"])
+
+    prompt = st.chat_input("메시지를 입력하세요")
+
+    if prompt:
+        st.session_state.chat_messages.append(
+            {"role": "user", "content": prompt}
+        )
+
+        if "안녕" in prompt:
+            answer = "안녕하세요. Streamlit chat_message와 chat_input 예제입니다."
+        elif "데이터" in prompt:
+            answer = f"현재 필터링된 데이터는 {len(filtered_df):,}행입니다."
+        elif "초기화" in prompt:
+            answer = "대화 초기화는 아래 버튼을 눌러주세요."
+        else:
+            answer = f"입력하신 내용: {prompt}"
+        
+        st.session_state.chat_messages.append(
+            {"role": "assistant", "content": answer}
+        )
+
+        st.rerun()
+
+    if st.button("채팅 기록 초기화"):
+        st.session_state.chat_messages = [
+            {"role": "assistant", "content": "채팅 기록을 초기화했습니다."}
+        ]
+        st.rerun()
+
+    st.divider()
+
+    st.subheader("st.write_stream 예제")
+
+    def stream_text():
+        text = "이 문장은 st.write_straem으로 한 글자씩 출력되는 예제입니다."
+        for char in text:
+            yield char
+            time.sleep(0.02)
+        
+    if has_streamlit_api("write_stream"):
+        if st.button("스트리밍 출력 실행"):
+            st.write_stream(stream_text)
+    else:
+        st.caption("현재 설치된 Streamlit 버전에 st.write_stream이 없습니다.")
+    
+elif selected_section == "DB / Secrets / Multipage 템플릿":
+    st.header("11. DB / Secrets / Multipage 템플릿")
+
+    st.info(
+        "이 섹션은 실제 DB, 로그인, 멀티페이지 구조를 바로 실행하기보다는 "
+        "프로젝트를 확장할 때 사용하는 템플릿 코드입니다."
+    )
+
+    st.subheader("Secrets 예제")
+
+    st.markdown(
+        """
+        Streamlit 프로젝트에서 API Key, DB 비밀번호 값은 민감정보는 보통
+        '.streamlit/secrets.toml' 파일에 저장합니다.
+        """
+    )
+
+    st.code(
+        """
+# .streamlit/secrets.toml 예시
+
+[database]
+url = "sqlite:///demo.db"
+
+[api]
+oepnai_api_key = "YOUR_API_KEY"
+        """,
+        language="toml",
+    )
+
+    try:
+        secret_keys = list(st.secrets.keys())
+        st.write("현재 감지된 secrets key:", secret_keys)
+    except Exception as e:
+        st.warning("secrets.toml이 없거나 secrets를 읽을 수 없습니다.")
+        st.exception(e)
+    
+    st.divider()
+
+    st.subheader("DB Connection 템플릿")
+
+    st.code(
+        """
+import streamlit as st
+
+conn = st.connection("my_database", type="sql")
+df = conn_query("SELECT * FROM patients LIMIT 100")
+st.dataframe(df)
+        """,
+        language="python",
+    )
+
+    st.caption(
+        "실제 DB 연결은 SQLAlchemy 드라이버, DB URL, secrets.toml 설정이 필요할 수 있습니다."
+    )
+
+    st.divider()
+
+    st.subheader("Multipage App 구조 예시")
+
+    st.code(
+        """
+my_streamlit_project/
+├── app.py
+├── pages/
+│   ├── 1_데이터_탐색.py
+│   ├── 2_모델_예측.py
+│   └── 3_리포트.py
+└── .streamlit/
+    └── config.toml
+        """,
+        language="text",
+    )
+
+    st.code(
+        """
+# app.py
+import streamlit as st
+
+st.set_page_config(page_title="헬스케어 데이터 앱", layout="wide")
+
+st.title("메인 페이지")
+st.page_link("pages/1_데이터_탐색.py", label="데이터 탐색")
+st.page_link("pages/2_모델_예측.py", label="모델 예측")
+st.page_link("pages/3_리포트.py", label="리포트")
+        """,
+        language="python",
+    )
+
+    if has_streamlit_api("login") and has_streamlit_api("user"):
+        st.divider()
+        st.subheader("Authentication 템플릿")
+        st.code(
+            """
+import streamlit as st
+
+if not st.user.is_logged_in:
+    st.login()
+else:
+    st.wirte(f"Welcome, {st.user.name}")
+    if st.button("Log out"):
+        st.logout()
+            """,
+            language="python",
+        )
+    else:
+        st.caption("현재 설치된 Streamlit 버전에 st.login / st.user API가 없을 수 있습니다.")
+
+# ------------------------------------------------------------
+# 7. Footer
+# ------------------------------------------------------------
+st.divider()
+st.caption(
+    "이 앱은 Streamlit 학습용 데모입니다. 실제 서비스에서는 입력 검증, 예외 처리, 보안, 인증, 배포 설정을 별도로 강화해야 합니다."
+)

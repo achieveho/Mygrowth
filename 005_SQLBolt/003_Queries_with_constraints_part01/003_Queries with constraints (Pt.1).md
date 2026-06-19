@@ -1,4 +1,4 @@
-# &lt; SQL Lesson 2: Quries with Constraints (Pt.1) &gt;
+# &lt; SQL Lesson 2: Queries with Constraints (Pt.1) &gt;
 
 ---
 

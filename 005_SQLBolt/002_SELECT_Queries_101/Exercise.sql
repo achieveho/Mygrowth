@@ -12,3 +12,7 @@ SELECT Title, Year FROM L002_Movies;
 
 -- 5. Find all the information about each film.
 SELECT * FROM L002_Movies;
+
+--6. 연도에 ','가 나오지 않도록 출력하기.
+SELECT CAST(Year as TEXT) AS Year
+FROM L002_Movies;
